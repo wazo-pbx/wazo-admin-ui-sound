@@ -21,7 +21,7 @@
             {% for format in sound_filename.formats %}
               <div class="">
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
-                                    sound_name=resource_list['name'],
+                                    category=resource_list['name'],
                                     sound_filename=sound_filename.name,
                                     format=format['format'],
                                     language=format['language']) }}"

@@ -23,7 +23,7 @@
               <div class="box-info">
                   <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
-                                    sound_name=resource_list['name'],
+                                    category=resource_list['name'],
                                     sound_filename=sound_filename.name,
                                     format=format['format'] if format['format'],
                                     language=format['language'] if format['language']) }}"
@@ -32,7 +32,7 @@
                   <i class="fa fa-fw fa-volume-up"></i>
                 </a>
                 <a href="{{ url_for('.SoundFileView:delete_sound_filename',
-                                    sound_name=resource_list['name'],
+                                    category=resource_list['name'],
                                     sound_filename=sound_filename.name,
                                     format=format['format'] if format['format'],
                                     language=format['language'] if format['language']) }}"
@@ -51,7 +51,7 @@
 
     {% call build_hidden_add_containers(_('Add Sound')) %}
         {% call build_form_box(_('Upload File')) %}
-          <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', sound_name=resource_list['name']) }}" data-toggle="validator" enctype="multipart/form-data">
+          <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=resource_list['name']) }}" data-toggle="validator" enctype="multipart/form-data">
             {% call add_default_fields(form=form, submit_value=_('Upload')) %}
               <input type="file" name="sound_filename">
               {{ render_field(form.format) }}

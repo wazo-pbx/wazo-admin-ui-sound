@@ -51,22 +51,22 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        resource_list = self._get_sound_files_by_soundname('system')
+        resource_list = self._get_sound_files_by_category('system')
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
                                resource_list=resource_list,
                                listing_urls=listing_urls)
 
-    def list_files(self, sound_name):
-        resource_list = self._get_sound_files_by_soundname(sound_name)
+    def list_files(self, category):
+        resource_list = self._get_sound_files_by_category(category)
         return render_template(self._get_template('list_files'),
                                form=SoundFilenameForm(),
                                resource_list=resource_list,
                                listing_urls=listing_urls)
 
-    def _get_sound_files_by_soundname(self, sound_name):
+    def _get_sound_files_by_category(self, category):
         try:
-            resource_list = self.service.list_sound_filename(sound_name)
+            resource_list = self.service.list_sound_filename(category)
             for resource in resource_list['files']:
                 resource['id'] = resource['name']
             return resource_list
@@ -74,14 +74,14 @@ class SoundFileView(BaseView):
             self._flash_http_error(error)
             return redirect(url_for('admin.Admin:get'))
 
-    def download_sound_filename(self, sound_name, sound_filename):
+    def download_sound_filename(self, category, sound_filename):
         kwargs = {}
         if request.args.get('format'):
             kwargs.update({'format': request.args.get('format')})
         if request.args.get('language'):
             kwargs.update({'language': request.args.get('language')})
 
-        binary_content = self.service.download_sound_filename(sound_name,
+        binary_content = self.service.download_sound_filename(category,
                                                               sound_filename,
                                                               **kwargs)
 
@@ -92,12 +92,12 @@ class SoundFileView(BaseView):
             mimetype='audio/wav'
         )
 
-    @route('/upload_sound_filename/<sound_name>', methods=['POST'])
-    def upload_sound_filename(self, sound_name):
+    @route('/upload_sound_filename/<category>', methods=['POST'])
+    def upload_sound_filename(self, category):
         if 'sound_filename' not in request.files:
             flash('[upload] Upload attempt with no file', 'error')
             return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
-                                                    'list_files'), sound_name=sound_name))
+                                                    'list_files'), category=category))
 
         file = request.files.get('sound_filename')
 
@@ -109,21 +109,21 @@ class SoundFileView(BaseView):
             return self._new(form)
 
         try:
-            self.service.upload_sound_filename(sound_name, file.filename, file.read(), **resources)
+            self.service.upload_sound_filename(category, file.filename, file.read(), **resources)
         except HTTPError as error:
             form = self._fill_form_error(form, error)
             self._flash_http_error(error)
             return self._new(form)
 
         return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
-                                                'list_files'), sound_name=sound_name))
+                                                'list_files'), category=category))
 
-    def delete_sound_filename(self, sound_name, sound_filename):
-        self.service.delete_sound_filename(sound_name,
+    def delete_sound_filename(self, category, sound_filename):
+        self.service.delete_sound_filename(category,
                                            sound_filename)
 
         return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
-                                                'list_files'), sound_name=sound_name))
+                                                'list_files'), category=category))
 
     def _map_resources_to_form_errors(self, form, resources):
         form.populate_errors(resources.get('sound', {}))

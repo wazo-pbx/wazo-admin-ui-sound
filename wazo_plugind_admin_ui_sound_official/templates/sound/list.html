@@ -8,7 +8,7 @@
   <section class="content">
     {% call build_list_containers(_('Sound Files'), 'file-sound-o') %}
       {% call build_list_table() %}
-        {% call build_list_table_headers(get=url_for('.SoundFileView:list_files', sound_name=''), delete=url_for('.SoundView:delete', id='')) %}
+        {% call build_list_table_headers(get=url_for('.SoundFileView:list_files', category=''), delete=url_for('.SoundView:delete', id='')) %}
           <th>{{ _('Name') }}</th>
           <th>{{ _('Files') }}</th>
         {% endcall %}
