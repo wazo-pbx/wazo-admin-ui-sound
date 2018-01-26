@@ -66,7 +66,7 @@ class SoundFileView(BaseView):
 
     def _get_sound_files_by_category(self, category):
         try:
-            resource_list = self.service.list_sound_filename(category)
+            resource_list = self.service.get(category)
             for resource in resource_list['files']:
                 resource['id'] = resource['name']
             return resource_list
