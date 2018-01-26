@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block content_header %}
+  {{ build_breadcrumb(_('Sound Files'), resource_list['name'], 'file-sound-o', [_('List'), resource_list['name']]) }}
+{% endblock %}
+
+
+{% block content %}
+  <section class="content">
+    {% call build_list_containers(_('Sound Files'), 'file-sound-o') %}
+
+      {% call build_table(id='table-list-sound-files') %}
+        {% call build_list_table_headers() %}
+          <th>{{ _('Name') }}</th>
+          <th>{{ _('Formats') }}</th>
+        {% endcall %}
+        {% call(sound_filename) build_list_table_rows(resource_list['files']) %}
+          <td>
+            {{ sound_filename.name }}
+          </td>
+          <td>
+            {% for format in sound_filename.formats %}
+              <div class="box-info">
+                  <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
+                <a href="{{ url_for('.SoundFileView:download_sound_filename',
+                                    sound_name=resource_list['name'],
+                                    sound_filename=sound_filename.name,
+                                    format=format['format'] if format['format'],
+                                    language=format['language'] if format['language']) }}"
+                        title="{{ _('Listen to the sound file') }}"
+                        class="btn btn-xs btn-default">
+                  <i class="fa fa-fw fa-volume-up"></i>
+                </a>
+                <a href="{{ url_for('.SoundFileView:delete_sound_filename',
+                                    sound_name=resource_list['name'],
+                                    sound_filename=sound_filename.name,
+                                    format=format['format'] if format['format'],
+                                    language=format['language'] if format['language']) }}"
+                   title="{{ _('Delete the sound file') }}"
+                   class="btn btn-xs btn-default"
+                   onclick="return confirm({{ _('Are you sure you want to delete this item ?') }});">
+                  <i class="fa fa-fw fa-remove"></i>
+                </a>
+              </div>
+            {% endfor %}
+          </td>
+        {% endcall %}
+      {% endcall %}
+
+    {% endcall %}
+
+    {% call build_hidden_add_containers(_('Add Sound')) %}
+        {% call build_form_box(_('Upload File')) %}
+          <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', sound_name=resource_list['name']) }}" data-toggle="validator" enctype="multipart/form-data">
+            {% call add_default_fields(form=form, submit_value=_('Upload')) %}
+              <input type="file" name="sound_filename">
+              {{ render_field(form.format) }}
+              {{ render_field(form.language) }}
+            {% endcall %}
+          </form>
+        {% endcall %}
+      {% endcall %}
+  </section>
+{% endblock %}
+
+
+{% block additional_js %}
+  <script src="{{ url_for('.static', filename='js/sound.js') }}"></script>
+{% endblock %}

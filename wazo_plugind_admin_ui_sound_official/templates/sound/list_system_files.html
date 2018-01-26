@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content_header %}
+  {{ build_breadcrumb(_('Sound Files System'), '', 'file-sound-o', [_('List'), resource_list['name']]) }}
+{% endblock %}
+
+
+{% block content %}
+  <section class="content">
+    {% call build_list_containers(_('Sound Files System'), 'file-sound-o') %}
+
+      {% call build_table(id='table-list-sound-files-system') %}
+        {% call build_list_table_headers() %}
+          <th>{{ _('Name') }}</th>
+          <th>{{ _('Formats') }}</th>
+        {% endcall %}
+        {% call(sound_filename) build_list_table_rows(resource_list['files']) %}
+          <td>
+            {{ sound_filename.name }}</td>
+          <td>
+            {% for format in sound_filename.formats %}
+              <div class="">
+                <a href="{{ url_for('.SoundFileView:download_sound_filename',
+                                    sound_name=resource_list['name'],
+                                    sound_filename=sound_filename.name,
+                                    format=format['format'],
+                                    language=format['language']) }}"
+                        title="{{ _('Listen to the sound file') }}"
+                        class="btn btn-xs btn-default">
+                  <i class="fa fa-fw fa-volume-up"></i>
+                </a>
+                <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
+                <small>{{ format['text'] }}</small>
+              </div>
+            {% endfor %}
+          </td>
+        {% endcall %}
+      {% endcall %}
+
+    {% endcall %}
+  </section>
+{% endblock %}
+
+
+{% block additional_js %}
+  <script src="{{ url_for('.static', filename='js/sound.js') }}"></script>
+{% endblock %}
