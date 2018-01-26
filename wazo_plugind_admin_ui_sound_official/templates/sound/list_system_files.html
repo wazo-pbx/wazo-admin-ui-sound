@@ -14,15 +14,15 @@
           <th>{{ _('Name') }}</th>
           <th>{{ _('Formats') }}</th>
         {% endcall %}
-        {% call(sound_filename) build_list_table_rows(resource_list['files']) %}
+        {% call(file_) build_list_table_rows(resource_list['files']) %}
           <td>
-            {{ sound_filename.name }}</td>
+            {{ file_.name }}</td>
           <td>
-            {% for format in sound_filename.formats %}
+            {% for format in file_.formats %}
               <div class="">
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
                                     category=resource_list['name'],
-                                    sound_filename=sound_filename.name,
+                                    filename=file_.name,
                                     format=format['format'],
                                     language=format['language']) }}"
                         title="{{ _('Listen to the sound file') }}"

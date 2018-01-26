@@ -14,17 +14,17 @@
           <th>{{ _('Name') }}</th>
           <th>{{ _('Formats') }}</th>
         {% endcall %}
-        {% call(sound_filename) build_list_table_rows(resource_list['files']) %}
+        {% call(file_) build_list_table_rows(resource_list['files']) %}
           <td>
-            {{ sound_filename.name }}
+            {{ file_.name }}
           </td>
           <td>
-            {% for format in sound_filename.formats %}
+            {% for format in file_.formats %}
               <div class="box-info">
                   <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
                                     category=resource_list['name'],
-                                    sound_filename=sound_filename.name,
+                                    filename=file_.name,
                                     format=format['format'] if format['format'],
                                     language=format['language'] if format['language']) }}"
                         title="{{ _('Listen to the sound file') }}"
@@ -33,7 +33,7 @@
                 </a>
                 <a href="{{ url_for('.SoundFileView:delete_sound_filename',
                                     category=resource_list['name'],
-                                    sound_filename=sound_filename.name,
+                                    filename=file_.name,
                                     format=format['format'] if format['format'],
                                     language=format['language'] if format['language']) }}"
                    title="{{ _('Delete the sound file') }}"
@@ -53,7 +53,7 @@
         {% call build_form_box(_('Upload File')) %}
           <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=resource_list['name']) }}" data-toggle="validator" enctype="multipart/form-data">
             {% call add_default_fields(form=form, submit_value=_('Upload')) %}
-              <input type="file" name="sound_filename">
+              <input type="file" name="filename">
               {{ render_field(form.format) }}
               {{ render_field(form.language) }}
             {% endcall %}
