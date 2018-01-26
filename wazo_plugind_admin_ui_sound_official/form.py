@@ -21,7 +21,7 @@ class SoundFilenameForm(BaseForm):
 
 
 class SoundForm(BaseForm):
-    name = StringField(l_('Name'))
+    name = StringField(l_('Name'), validators=[Length(max=255)])
     submit = SubmitField(l_('Submit'))
 
 
