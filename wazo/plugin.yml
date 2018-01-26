@@ -1,0 +1,11 @@
+name: admin-ui-sound
+namespace: official
+version: 1.1.0
+author: Wazo Team
+display_name: Wazo Sound Files
+min_wazo_version: 18.01
+tags:
+  - beta
+  - application
+  - sound
+homepage: https://github.com/wazo-pbx/wazo-admin-ui-sound
