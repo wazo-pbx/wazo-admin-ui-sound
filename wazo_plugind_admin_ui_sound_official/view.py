@@ -99,7 +99,7 @@ class SoundFileView(BaseView):
             return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
                                                     'list_files'), category=category))
 
-        file = request.files.get('sound_filename')
+        file_ = request.files.get('sound_filename')
 
         form = self.form()
         resources = self._map_form_to_resources_post(form)
@@ -109,7 +109,7 @@ class SoundFileView(BaseView):
             return self._new(form)
 
         try:
-            self.service.upload_sound_filename(category, file.filename, file.read(), **resources)
+            self.service.upload_sound_filename(category, file_.filename, file_.read(), **resources)
         except HTTPError as error:
             form = self._fill_form_error(form, error)
             self._flash_http_error(error)
@@ -136,14 +136,14 @@ class SoundListingView(LoginRequiredView):
         sounds = self.service.list()
         results = []
         for sound in sounds['items']:
-            for file in sound['files']:
+            for file_ in sound['files']:
                 if sound['name'] == 'system':
-                    for format in file['formats']:
-                        results.append({'id': file['name'], 'text': self._prepare_sound_filename_infos(file, format)})
+                    for format_ in file_['formats']:
+                        results.append({'id': file_['name'], 'text': self._prepare_sound_filename_infos(file_, format_)})
                 else:
-                    for format in file['formats']:
-                        results.append({'id': format['path'], 'text': self._prepare_sound_filename_infos(file, format)})
+                    for format_ in file_['formats']:
+                        results.append({'id': format_['path'], 'text': self._prepare_sound_filename_infos(file_, format_)})
         return jsonify({'results': results})
 
-    def _prepare_sound_filename_infos(self, file, format):
-        return '{}.{} ({})'.format(file['name'], format['format'], format['language'])
+    def _prepare_sound_filename_infos(self, file_, format_):
+        return '{}.{} ({})'.format(file_['name'], format_['format'], format_['language'])
