@@ -51,32 +51,28 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        try:
-            resource_list = self.service.list_sound_filename('system')
-            for resource in resource_list['files']:
-                resource['id'] = resource['name']
-        except HTTPError as error:
-            self._flash_http_error(error)
-            return redirect(url_for('admin.Admin:get'))
-
+        resource_list = self._get_sound_files_by_soundname('system')
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
                                resource_list=resource_list,
                                listing_urls=listing_urls)
 
     def list_files(self, sound_name):
-        try:
-            resource_list = self.service.list_sound_filename(sound_name)
-            for resource in resource_list['files']:
-                resource['id'] = resource['name']
-        except HTTPError as error:
-            self._flash_http_error(error)
-            return redirect(url_for('admin.Admin:get'))
-
+        resource_list = self._get_sound_files_by_soundname(sound_name)
         return render_template(self._get_template('list_files'),
                                form=SoundFilenameForm(),
                                resource_list=resource_list,
                                listing_urls=listing_urls)
+
+    def _get_sound_files_by_soundname(self, sound_name):
+        try:
+            resource_list = self.service.list_sound_filename(sound_name)
+            for resource in resource_list['files']:
+                resource['id'] = resource['name']
+            return resource_list
+        except HTTPError as error:
+            self._flash_http_error(error)
+            return redirect(url_for('admin.Admin:get'))
 
     def download_sound_filename(self, sound_name, sound_filename):
         kwargs = {}
