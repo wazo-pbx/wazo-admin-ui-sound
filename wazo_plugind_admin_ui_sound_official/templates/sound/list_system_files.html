@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb(_('Sound Files System'), '', 'file-sound-o', [_('List'), resource_list['name']]) }}
+  {{ build_breadcrumb(_('Sound Files System'), '', 'file-sound-o', [_('List'), sound['name']]) }}
 {% endblock %}
 
 
@@ -14,14 +14,14 @@
           <th>{{ _('Name') }}</th>
           <th>{{ _('Formats') }}</th>
         {% endcall %}
-        {% call(file_) build_list_table_rows(resource_list['files']) %}
+        {% call(file_) build_list_table_rows(sound['files']) %}
           <td>
             {{ file_.name }}</td>
           <td>
             {% for format in file_.formats %}
               <div class="">
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
-                                    category=resource_list['name'],
+                                    category=sound['name'],
                                     filename=file_.name,
                                     format=format['format'],
                                     language=format['language']) }}"

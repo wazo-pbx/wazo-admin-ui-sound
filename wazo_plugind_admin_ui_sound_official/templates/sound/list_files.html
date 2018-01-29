@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb(_('Sound Files'), resource_list['name'], 'file-sound-o', [_('List'), resource_list['name']]) }}
+  {{ build_breadcrumb(_('Sound Files'), sound['name'], 'file-sound-o', [_('List'), sound['name']]) }}
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
           <th>{{ _('Name') }}</th>
           <th>{{ _('Formats') }}</th>
         {% endcall %}
-        {% call(file_) build_list_table_rows(resource_list['files']) %}
+        {% call(file_) build_list_table_rows(sound['files']) %}
           <td>
             {{ file_.name }}
           </td>
@@ -32,7 +32,7 @@
                   <i class="fa fa-fw fa-volume-up"></i>
                 </a>
                 <a href="{{ url_for('.SoundFileView:delete_sound_filename',
-                                    category=resource_list['name'],
+                                    category=sound['name'],
                                     filename=file_.name,
                                     format=format['format'] if format['format'],
                                     language=format['language'] if format['language']) }}"
@@ -51,7 +51,7 @@
 
     {% call build_hidden_add_containers(_('Add Sound')) %}
         {% call build_form_box(_('Upload File')) %}
-          <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=resource_list['name']) }}" data-toggle="validator" enctype="multipart/form-data">
+          <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=sound['name']) }}" data-toggle="validator" enctype="multipart/form-data">
             {% call add_default_fields(form=form, submit_value=_('Upload')) %}
               <input type="file" name="filename">
               {{ render_field(form.format) }}

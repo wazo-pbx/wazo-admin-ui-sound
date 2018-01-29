@@ -59,17 +59,17 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        resource_list = self._get_sound_files_by_category('system')
+        sound = self._get_sound_files_by_category('system')
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
-                               resource_list=resource_list,
+                               sound=sound,
                                listing_urls=listing_urls)
 
     def list_files(self, category):
-        resource_list = self._get_sound_files_by_category(category)
+        sound = self._get_sound_files_by_category(category)
         return render_template(self._get_template('list_files'),
                                form=SoundFilenameForm(),
-                               resource_list=resource_list,
+                               sound=sound,
                                listing_urls=listing_urls)
 
     def _get_sound_files_by_category(self, category):
