@@ -1,6 +1,8 @@
 # Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+import cgi
+
 from flask import jsonify, request, render_template, redirect, url_for, send_file, flash
 from flask_babel import lazy_gettext as l_
 from flask_classful import route
@@ -85,18 +87,23 @@ class SoundFileView(BaseView):
         return sound
 
     def download_sound_filename(self, category, filename):
-        binary_content = self.service.download_sound_filename(
+        response = self.service.download_sound_filename(
             category,
             filename,
             format_=request.args.get('format'),
             language=request.args.get('language'),
         )
+        content_disposition = response.headers.get('content-disposition')
+        if content_disposition:
+            _, params = cgi.parse_header(content_disposition)
+            if params:
+                filename = params['filename']
 
         return send_file(
-            BytesIO(binary_content),
-            attachment_filename='{}.wav'.format(filename),
+            BytesIO(response.content),
+            attachment_filename=filename,
             as_attachment=True,
-            mimetype='audio/wav'
+            mimetype=response.headers.get('content-type')
         )
 
     @route('/upload_sound_filename/<category>', methods=['POST'])
