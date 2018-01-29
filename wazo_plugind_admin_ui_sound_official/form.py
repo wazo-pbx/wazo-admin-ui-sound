@@ -15,15 +15,15 @@ from wazo_admin_ui.helpers.form import BaseForm
 
 
 class SoundFilenameForm(BaseForm):
-    format = StringField(l_('Format'))
-    language = StringField(l_('Language'))
+    format = StringField(l_('Format'), validators=[Length(min=1, max=10)])
+    language = StringField(l_('Language'), validators=[Length(min=1, max=10)])
     text = StringField(l_('Text'))
     path = StringField(l_('Path'))
     submit = SubmitField(l_('Submit'))
 
 
 class SoundForm(BaseForm):
-    name = StringField(l_('Name'), validators=[Length(max=255)])
+    name = StringField(l_('Name'), validators=[InputRequired(), Length(max=255)])
     submit = SubmitField(l_('Submit'))
 
 
