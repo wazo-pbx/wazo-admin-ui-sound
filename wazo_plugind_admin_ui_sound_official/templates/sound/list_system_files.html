@@ -12,14 +12,14 @@
       {% call build_table(id='table-list-sound-files-system') %}
         {% call build_list_table_headers() %}
           <th>{{ _('Name') }}</th>
-          <th>{{ _('Formats') }}</th>
+          <th>{{ _('Infos') }}</th>
         {% endcall %}
         {% call(file_) build_list_table_rows(sound['files']) %}
           <td>
             {{ file_.name }}</td>
           <td>
             {% for format in file_.formats %}
-              <div class="">
+              <div class="box">
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
                                     category=sound['name'],
                                     filename=file_.name,
@@ -29,8 +29,9 @@
                         class="btn btn-xs btn-default">
                   <i class="fa fa-fw fa-volume-up"></i>
                 </a>
-                <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
-                <small>{{ format['text'] }}</small>
+                <strong>{{ _('Format') }}:</strong> {{ format['format'] if format['format'] else '-' }}
+                <strong>{{ _('Language') }}:</strong> {{ format['language'] if format['language'] else '-' }}<br>
+                <strong>{{ _('Text') }}:</strong> <small>{{ format['text'] if format['text'] else '-' }}</small>
               </div>
             {% endfor %}
           </td>

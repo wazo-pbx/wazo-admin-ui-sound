@@ -12,7 +12,7 @@
       {% call build_table(id='table-list-sound-files') %}
         {% call build_list_table_headers() %}
           <th>{{ _('Name') }}</th>
-          <th>{{ _('Formats') }}</th>
+          <th>{{ _('Infos') }}</th>
         {% endcall %}
         {% call(file_) build_list_table_rows(sound['files']) %}
           <td>
@@ -20,27 +20,29 @@
           </td>
           <td>
             {% for format in file_.formats %}
-              <div class="box-info">
-                  <strong>{{ format['format'] }}:</strong> {{ format['language'] }}
-                <a href="{{ url_for('.SoundFileView:download_sound_filename',
-                                    category=resource_list['name'],
-                                    filename=file_.name,
-                                    format=format['format'] if format['format'],
-                                    language=format['language'] if format['language']) }}"
-                        title="{{ _('Listen to the sound file') }}"
-                        class="btn btn-xs btn-default">
-                  <i class="fa fa-fw fa-volume-up"></i>
-                </a>
+              <div class="box">
                 <a href="{{ url_for('.SoundFileView:delete_sound_filename',
                                     category=sound['name'],
                                     filename=file_.name,
-                                    format=format['format'] if format['format'],
-                                    language=format['language'] if format['language']) }}"
+                                    format_=format['format'],
+                                    language=format['language']) }}"
                    title="{{ _('Delete the sound file') }}"
                    class="btn btn-xs btn-default"
                    onclick="return confirm({{ _('Are you sure you want to delete this item ?') }});">
                   <i class="fa fa-fw fa-remove"></i>
                 </a>
+                <a href="{{ url_for('.SoundFileView:download_sound_filename',
+                                    category=sound['name'],
+                                    filename=file_.name,
+                                    format_=format['format'],
+                                    language=format['language']) }}"
+                        title="{{ _('Listen to the sound file') }}"
+                        class="btn btn-xs btn-default">
+                  <i class="fa fa-fw fa-volume-up"></i>
+                </a>
+                <strong>{{ _('Format') }}:</strong> {{ format['format'] if format['format'] else '-' }}
+                <strong>{{ _('Language') }}:</strong> {{ format['language'] if format['language'] else '-' }}<br>
+                <strong>{{ _('Text') }}:</strong> <small>{{ format['text'] if format['text'] else '-' }}</small>
               </div>
             {% endfor %}
           </td>
@@ -49,8 +51,8 @@
 
     {% endcall %}
 
-    {% call build_hidden_add_containers(_('Add Sound')) %}
-        {% call build_form_box(_('Upload File')) %}
+    {% call build_hidden_add_containers(_('Add Sound file')) %}
+        {% call build_form_box(_('Choose your file')) %}
           <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=sound['name']) }}" data-toggle="validator" enctype="multipart/form-data">
             {% call add_default_fields(form=form, submit_value=_('Upload')) %}
               <input type="file" name="filename">
