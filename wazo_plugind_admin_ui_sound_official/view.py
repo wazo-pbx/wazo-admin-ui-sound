@@ -150,7 +150,7 @@ class SoundListingView(LoginRequiredView):
                 for format_ in file_['formats']:
                     results.append({
                         'text': '{}.{} ({})'.format(file_['name'], format_['format'], format_['language']),
-                        'id': file_['name'] if sound['name'] == 'system' else file_['path'],
+                        'id': file_['name'] if sound['name'] == 'system' else format_['path'],
                     })
 
         return jsonify({'results': results})
