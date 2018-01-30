@@ -24,7 +24,7 @@
                 <a href="{{ url_for('.SoundFileView:delete_sound_filename',
                                     category=sound['name'],
                                     filename=file_.name,
-                                    format_=format['format'],
+                                    format=format['format'],
                                     language=format['language']) }}"
                    title="{{ _('Delete the sound file') }}"
                    class="btn btn-xs btn-default"
@@ -34,7 +34,7 @@
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
                                     category=sound['name'],
                                     filename=file_.name,
-                                    format_=format['format'],
+                                    format=format['format'],
                                     language=format['language']) }}"
                         title="{{ _('Listen to the sound file') }}"
                         class="btn btn-xs btn-default">
