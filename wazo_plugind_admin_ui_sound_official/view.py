@@ -149,7 +149,7 @@ class SoundListingView(LoginRequiredView):
             for file_ in sound['files']:
                 for format_ in file_['formats']:
                     results.append({
-                        'text': '{}.{} ({})'.format(file_['name'], format_['format'], format_['language']),
+                        'text': '{} [{}] ({})'.format(file_['name'], format_['format'], format_['language']),
                         'id': file_['name'] if sound['name'] == 'system' else format_['path'],
                     })
 

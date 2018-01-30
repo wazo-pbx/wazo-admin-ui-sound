@@ -28,7 +28,7 @@ class SoundForm(BaseForm):
 
 
 class SoundDestinationForm(BaseForm):
-    set_value_template = '{name}.{format} ({language})'
+    set_value_template = '{name} [{format}] ({language})'
 
     filename = SelectField(l_('Filename'), choices=[], validators=[InputRequired(), Length(max=255)])
     name = DestinationHiddenField()
