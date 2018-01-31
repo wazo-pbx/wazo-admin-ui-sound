@@ -1,9 +1,9 @@
 name: admin-ui-sound
 namespace: official
-version: 1.1.0
+version: 1.0.0-1
 author: Wazo Team
 display_name: Wazo Sound Files
-min_wazo_version: 18.01
+min_wazo_version: 18.02
 tags:
   - beta
   - application

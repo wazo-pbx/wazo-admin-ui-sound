@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content_header %}
+  {{ build_breadcrumb(_('Sound Files'), '', 'file-sound-o', ['List']) }}
+{% endblock %}
+
+{% block content %}
+  <section class="content">
+    {% call build_list_containers(_('Sound Files'), 'file-sound-o') %}
+      {% call build_list_table() %}
+        {% call build_list_table_headers(get=url_for('.SoundFileView:list_files', category=''), delete=url_for('.SoundView:delete', id='')) %}
+          <th>{{ _('Name') }}</th>
+          <th>{{ _('Files') }}</th>
+        {% endcall %}
+        {% call(sound) build_list_table_rows(resource_list['items']) %}
+          <td>{{ sound.name }}</td>
+          <td>{{ sound.files|length }}</td>
+        {% endcall %}
+      {% endcall %}
+    {% endcall %}
+
+    {% call build_hidden_add_containers(_('Add Sound Directory')) %}
+      {% call build_form() %}
+        {% call add_default_fields(form=form, submit_value=_('Add')) %}
+          {{ render_field(form.name) }}
+        {% endcall %}
+      {% endcall %}
+    {% endcall %}
+  </section>
+{% endblock %}
