@@ -123,25 +123,24 @@ class SoundFileView(BaseView):
 
     @route('/upload_sound_filename/<category>', methods=['POST'])
     def upload_sound_filename(self, category):
-        if 'filename' not in request.files:
-            flash('[upload] Upload attempt with no file', 'error')
+        if 'name' not in request.files:
+            flash(l_('[upload] Upload attempt with no file', 'error'))
             return redirect(url_for('.SoundFileView:list_files', category=category))
 
-        file_ = request.files.get('filename')
+        file_ = request.files.get('name')
 
         form = self.form()
         resources = self._map_form_to_resources_post(form)
+        del resources['name']
 
         if not form.csrf_token.validate(form):
             flash_basic_form_errors(form)
-            return self._new(form)
+            return redirect(url_for('.SoundFileView:list_files', category=category))
 
         try:
             self.service.upload_sound_filename(category, file_.filename, file_.read(), **resources)
         except HTTPError as error:
-            form = self._fill_form_error(form, error)
             self._flash_http_error(error)
-            return self._new(form)
 
         return redirect(url_for('.SoundFileView:list_files', category=category))
 
