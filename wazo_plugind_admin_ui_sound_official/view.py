@@ -61,20 +61,20 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        sound = self._get_sound_files_by_category('system', exclude_formats=['gsm'])
+        sound = self._get_sound_by_category('system', exclude_formats=['gsm'])
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
                                sound=sound,
                                listing_urls=listing_urls)
 
     def list_files(self, category):
-        sound = self._get_sound_files_by_category(category)
+        sound = self._get_sound_by_category(category)
         return render_template(self._get_template('list_files'),
                                form=SoundFilenameForm(),
                                sound=sound,
                                listing_urls=listing_urls)
 
-    def _get_sound_files_by_category(self, category, exclude_formats=None):
+    def _get_sound_by_category(self, category, exclude_formats=None):
         exclude_formats = exclude_formats or []
         try:
             sound = self.service.get(category)
@@ -164,9 +164,11 @@ class SoundListingView(LoginRequiredView):
             for file_ in sound['files']:
                 for format_ in file_['formats']:
                     results.append({
-                        'text': '{}{}{}'.format(file_['name'],
-                        ' [{}]'.format(format_['format']) if format_['format'] else '',
-                        ' ({})'.format(format_['language']) if format_['language'] else '',),
+                        'text': '{}{}{}'.format(
+                            file_['name'],
+                            ' [{}]'.format(format_['format']) if format_['format'] else '',
+                            ' ({})'.format(format_['language']) if format_['language'] else '',
+                        ),
                         'id': file_['name'] if sound['name'] == 'system' else format_['path'],
                     })
 
