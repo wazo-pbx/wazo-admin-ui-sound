@@ -61,7 +61,7 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        sound = self._get_sound_files_by_category('system')
+        sound = self._get_sound_files_by_category('system', excludes_format=['gsm'])
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
                                sound=sound,
@@ -74,17 +74,39 @@ class SoundFileView(BaseView):
                                sound=sound,
                                listing_urls=listing_urls)
 
-    def _get_sound_files_by_category(self, category):
+    def _get_sound_files_by_category(self, category, excludes_format=[]):
         try:
             sound = self.service.get(category)
         except HTTPError as error:
             self._flash_http_error(error)
             return redirect(url_for('admin.Admin:get'))
 
+        result = {
+            'name': category,
+            'files': []
+        }
         for file_ in sound['files']:
-            file_['id'] = file_['name']
+            skip_file = False
+            file_result = {
+                'id': file_['name'],
+                'name': file_['name'],
+                'formats': []
+            }
+            if excludes_format:
+                for format_idx, format_ in enumerate(file_['formats']):
+                    if format_['format'] in excludes_format:
+                        if len(file_['formats']) == 1:
+                            skip_file = True
+                            continue
+                    else:
+                        file_result['formats'].append(file_['formats'][format_idx])
+            else:
+                file_result['formats'].append(file_['formats'])
 
-        return sound
+            if not skip_file:
+                result['files'].append(file_result)
+
+        return result
 
     def download_sound_filename(self, category, filename):
         response = self.service.download_sound_filename(

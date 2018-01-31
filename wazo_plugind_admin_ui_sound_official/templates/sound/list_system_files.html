@@ -18,7 +18,8 @@
           <td>
             {{ file_.name }}</td>
           <td>
-            {% for format in file_.formats if format['format'] != 'gsm' %}
+          {{ file_.format }}
+            {% for format in file_.formats %}
               <div class="box">
                 <a href="{{ url_for('.SoundFileView:download_sound_filename',
                                     category=sound['name'],
