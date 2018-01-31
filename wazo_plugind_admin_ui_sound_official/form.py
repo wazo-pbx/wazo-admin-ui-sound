@@ -7,6 +7,7 @@ from wtforms.fields import (
     SelectField,
     StringField,
     SubmitField,
+    FileField
 )
 from wtforms.validators import InputRequired, Length
 
@@ -15,8 +16,9 @@ from wazo_admin_ui.helpers.form import BaseForm
 
 
 class SoundFilenameForm(BaseForm):
-    format = StringField(l_('Format'), validators=[Length(min=1, max=10)])
-    language = StringField(l_('Language'), validators=[Length(min=1, max=10)])
+    name = FileField(l_('Name'), validators=[InputRequired(), Length(max=255)])
+    format = StringField(l_('Format'), validators=[Length(max=10)])
+    language = StringField(l_('Language'), validators=[Length(max=10)])
     text = StringField(l_('Text'))
     path = StringField(l_('Path'))
     submit = SubmitField(l_('Submit'))
