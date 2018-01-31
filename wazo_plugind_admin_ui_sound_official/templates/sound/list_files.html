@@ -55,7 +55,7 @@
         {% call build_form_box(_('Choose your file')) %}
           <form class="form-horizontal" method="POST" action="{{ url_for('.SoundFileView:upload_sound_filename', category=sound['name']) }}" data-toggle="validator" enctype="multipart/form-data">
             {% call add_default_fields(form=form, submit_value=_('Upload')) %}
-              <input type="file" name="filename">
+              <input type="file" name="filename" required>
               {{ render_field(form.format) }}
               {{ render_field(form.language) }}
             {% endcall %}
