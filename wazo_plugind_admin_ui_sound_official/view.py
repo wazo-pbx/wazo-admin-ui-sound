@@ -146,8 +146,12 @@ class SoundFileView(BaseView):
         return redirect(url_for('.SoundFileView:list_files', category=category))
 
     def delete_sound_filename(self, category, filename):
-        # XXX: this remove filename from every language/format
-        self.service.delete_sound_filename(category, filename)
+        self.service.delete_sound_filename(
+            category,
+            filename,
+            format_=request.args.get('format'),
+            language=request.args.get('language')
+        )
         return redirect(url_for('.SoundFileView:list_files', category=category))
 
     def _map_resources_to_form_errors(self, form, resources):
