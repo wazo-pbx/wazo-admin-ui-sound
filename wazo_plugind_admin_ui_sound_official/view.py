@@ -61,7 +61,7 @@ class SoundFileView(BaseView):
     @classy_menu_item('.advanced', l_('Advanced'), order=9)
     @classy_menu_item('.advanced.sound_system', l_('Sound Files System'), order=2, icon="file-sound-o")
     def sound_files_system(self):
-        sound = self._get_sound_by_category('system', exclude_formats=['gsm'])
+        sound = self._get_sound_by_category('system')
         return render_template(self._get_template('list_system_files'),
                                form=self.form(),
                                sound=sound,
@@ -74,32 +74,14 @@ class SoundFileView(BaseView):
                                sound=sound,
                                listing_urls=listing_urls)
 
-    def _get_sound_by_category(self, category, exclude_formats=None):
-        exclude_formats = exclude_formats or []
+    def _get_sound_by_category(self, category):
         try:
             sound = self.service.get(category)
         except HTTPError as error:
             self._flash_http_error(error)
             return redirect(url_for('admin.Admin:get'))
 
-        if not exclude_formats:
-            return sound
-
-        result = dict(sound)
-        result['files'] = []
-
-        for file_ in sound['files']:
-            file_result = dict(file_)
-            file_result['formats'] = []
-
-            for format_ in file_['formats']:
-                if format_['format'] not in exclude_formats:
-                    file_result['formats'].append(format_)
-
-            if file_result['formats']:
-                result['files'].append(file_result)
-
-        return result
+        return sound
 
     def download_sound_filename(self, category, filename):
         response = self.service.download_sound_filename(
