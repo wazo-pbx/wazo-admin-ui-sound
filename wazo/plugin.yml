@@ -1,7 +1,6 @@
-plugin_format_version: 2
 name: admin-ui-sound
 namespace: official
-version: 1.0.0-1
+version: 1.0.0-2
 author: Wazo Team
 display_name: Wazo Sound Files
 min_wazo_version: 18.02
