@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[wazo.wazo-admin-ui-sound]
+file_filter = wazo_plugind_admin_ui_sound_official/translations/<lang>/LC_MESSAGES/messages.po
+source_file = wazo_plugind_admin_ui_sound_official/translations/messages.pot
+source_lang = en
+type = PO

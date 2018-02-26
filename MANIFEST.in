@@ -1,2 +1,3 @@
 recursive-include wazo_plugind_admin_ui_sound_official/templates *
 recursive-include wazo_plugind_admin_ui_sound_official/static *
+recursive-include wazo_plugind_admin_ui_sound_official/translations *
