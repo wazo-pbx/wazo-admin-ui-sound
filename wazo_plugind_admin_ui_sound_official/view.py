@@ -3,11 +3,12 @@
 
 import cgi
 
+from io import BytesIO
+
 from flask import jsonify, request, render_template, redirect, url_for, send_file, flash
 from flask_babel import lazy_gettext as l_
 from flask_classful import route
 from flask_menu.classy import classy_menu_item
-from io import BytesIO
 from requests.exceptions import HTTPError
 
 from wazo_admin_ui.helpers.classful import (
@@ -106,7 +107,7 @@ class SoundFileView(BaseView):
     @route('/upload_sound_filename/<category>', methods=['POST'])
     def upload_sound_filename(self, category):
         if 'name' not in request.files:
-            flash(l_('[upload] Upload attempt with no file', 'error'))
+            flash(l_('[upload] Upload attempt with no file'), 'error')
             return redirect(url_for('.SoundFileView:list_files', category=category))
 
         file_ = request.files.get('name')
