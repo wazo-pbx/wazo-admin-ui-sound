@@ -1,14 +1,14 @@
-# Translations template for wazo-admin-ui-sound.
+# Translations template for wazo_admin_ui_sound.
 # Copyright (C) 2018 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the
-# wazo-admin-ui-sound project.
+# wazo_admin_ui_sound project.
 # Wazo Dev Team <dev@wazo.community>, 2018.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: wazo-admin-ui-sound 0.1\n"
+"Project-Id-Version: wazo_admin_ui_sound 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-26 13:09-0500\n"
+"POT-Creation-Date: 2018-02-27 13:43-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: Turkish (https://www.transifex.com/wazo/teams/69545/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -90,6 +90,12 @@ msgstr ""
 msgid "Sound Files"
 msgstr ""
 
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:4
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:4
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list_system_files.html:4
+msgid "List"
+msgstr ""
+
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:13
 msgid "Files"
 msgstr ""
@@ -100,11 +106,6 @@ msgstr ""
 
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:24
 msgid "Add"
-msgstr ""
-
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:4
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list_system_files.html:4
-msgid "List"
 msgstr ""
 
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:15
