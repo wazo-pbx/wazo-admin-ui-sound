@@ -25,7 +25,7 @@ class SoundView(BaseView):
     form = SoundForm
     resource = 'sound'
 
-    @classy_menu_item('.sound', 'Sound Files', order=6, icon="file-sound-o")
+    @classy_menu_item('.sound', l_('Sound Files'), order=6, icon="file-sound-o")
     def index(self):
         return super(SoundView, self).index()
 
