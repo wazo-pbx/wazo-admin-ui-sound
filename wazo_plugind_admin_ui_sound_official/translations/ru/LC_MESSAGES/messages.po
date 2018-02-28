@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui_sound 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-27 13:43-0500\n"
+"POT-Creation-Date: 2018-02-28 11:22-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: Russian (https://www.transifex.com/wazo/teams/69545/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -69,25 +69,26 @@ msgstr ""
 msgid "Sound"
 msgstr ""
 
-#: wazo_plugind_admin_ui_sound_official/view.py:61
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:4
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:9
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:4
+#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:10
+#: wazo_plugind_admin_ui_sound_official/view.py:28
+msgid "Sound Files"
+msgstr ""
+
+#: wazo_plugind_admin_ui_sound_official/view.py:62
 msgid "Advanced"
 msgstr ""
 
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list_system_files.html:4
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list_system_files.html:10
-#: wazo_plugind_admin_ui_sound_official/view.py:62
+#: wazo_plugind_admin_ui_sound_official/view.py:63
 msgid "Sound Files System"
 msgstr ""
 
-#: wazo_plugind_admin_ui_sound_official/view.py:109
+#: wazo_plugind_admin_ui_sound_official/view.py:110
 msgid "[upload] Upload attempt with no file"
-msgstr ""
-
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:4
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:9
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:4
-#: wazo_plugind_admin_ui_sound_official/templates/sound/list_files.html:10
-msgid "Sound Files"
 msgstr ""
 
 #: wazo_plugind_admin_ui_sound_official/templates/sound/list.html:4
